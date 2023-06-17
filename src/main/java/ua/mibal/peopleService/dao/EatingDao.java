@@ -45,11 +45,15 @@ public class EatingDao {
         if (personId == -1) {
             throw new IllegalArgumentException("Entry person id must be initialized");
         }
-        if (dayId == -1) {
-            throw new IllegalArgumentException("Entry day id must be initialized");
+        if (!(1 <= dayId && dayId <= DAYS_COUNT)) {
+            throw new IllegalArgumentException(format(
+                    "Day id='%d' must be in range [%d, %d]", dayId, 1, DAYS_COUNT
+            ));
         }
-        if (eatingId == -1) {
-            throw new IllegalArgumentException("Entry eating id must be initialized");
+        if (!(1 <= eatingId && eatingId <= EATING_COUNT)) {
+            throw new IllegalArgumentException(format(
+                    "Eating id='%d' must be in range [%d, %d]", eatingId, 1, EATING_COUNT
+            ));
         }
 
         List<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
