@@ -25,7 +25,7 @@ public class EatingController {
     String addEntry(@RequestBody Entry entry) {
         try {
             eatingDao.save(entry);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return e.getMessage();
         }
         return "Ok";

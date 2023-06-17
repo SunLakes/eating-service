@@ -6,11 +6,11 @@ package ua.mibal.peopleService.model;
  */
 public class Entry {
 
-    private int id;
+    private int id = -1;
 
-    private int day;
+    private int day = -1;
 
-    private int eating;
+    private int eating = -1;
 
     public Entry(int id, int day, int eating) {
         this.id = id;
