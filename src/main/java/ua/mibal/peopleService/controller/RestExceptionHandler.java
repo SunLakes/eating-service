@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ua.mibal.peopleService.model.ApiError;
 
+import javax.management.InstanceAlreadyExistsException;
+
 /**
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
@@ -16,9 +18,18 @@ import ua.mibal.peopleService.model.ApiError;
 @RestController
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(InstanceAlreadyExistsException.class)
+    protected ResponseEntity<ApiError> handleInstanceAlreadyExistsException(InstanceAlreadyExistsException e) {
+        HttpStatus httpStatus = HttpStatus.ALREADY_REPORTED;
+        return new ResponseEntity<>(
+                new ApiError(httpStatus, e),
+                httpStatus
+        );
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<ApiError> handleIllegalArgumentException(IllegalArgumentException e) {
-        HttpStatus httpStatus = HttpStatus.ALREADY_REPORTED;
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(
                 new ApiError(httpStatus, e),
                 httpStatus

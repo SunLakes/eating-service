@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ua.mibal.peopleService.dao.EatingDao;
 import ua.mibal.peopleService.model.Entry;
 
+import javax.management.InstanceAlreadyExistsException;
+
 /**
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
@@ -22,7 +24,7 @@ public class EatingController {
     }
 
     @PostMapping
-    Entry addEntry(@RequestBody Entry entry) {
+    Entry addEntry(@RequestBody Entry entry) throws InstanceAlreadyExistsException {
         eatingDao.save(entry);
         return entry;
     }

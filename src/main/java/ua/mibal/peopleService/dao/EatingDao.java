@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.model.Entry;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +36,7 @@ public class EatingDao {
         this.eatingList = getEatingList();
     }
 
-    public synchronized void save(final Entry entry) throws IllegalArgumentException {
+    public synchronized void save(final Entry entry) throws IllegalArgumentException, InstanceAlreadyExistsException {
         final int dayId = entry.getDay();
         final int eatingId = entry.getEating();
         final int personId = entry.getId();
@@ -56,8 +57,8 @@ public class EatingDao {
 
         List<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
         if (currentDayEatingIds.contains(personId)) {
-            throw new IllegalArgumentException(format(
-                    "Entry already exists - person with id '%d' has already eaten", personId
+            throw new InstanceAlreadyExistsException(format(
+                    "Entry already exists: person with id '%d' has already eaten. %s", personId, entry
             ));
         }
         // TODO verify by days that person specialize at registration form
