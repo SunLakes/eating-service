@@ -87,6 +87,7 @@ public class EatingDao {
 
         currentDayEatingIds.add(personId);
         updateListFile();
+        log.info("Added entry " + entry);
     }
 
     private List<List<List<Integer>>> getEatingList() {
