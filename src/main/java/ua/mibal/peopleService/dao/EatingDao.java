@@ -4,14 +4,18 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.model.Entry;
+import ua.mibal.peopleService.model.Person;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -22,19 +26,22 @@ import static java.lang.String.format;
 @Component
 public class EatingDao {
 
+    private final static Logger log = LoggerFactory.getLogger(EatingDao.class);
+    private final static ObjectMapper objectMapper = new ObjectMapper();
+
+    private final String dataPath;
+    private final PersonDao personDao;
+    private final List<List<List<Integer>>> eatingList;
+
     private final int daysCount;
     private final int eatingsCount;
 
-    private final String dataPath;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    private final List<List<List<Integer>>> eatingList;
-
     public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath,
+                     final PersonDao personDao,
                      @Value("${count.days}") final int daysCount,
                      @Value("${count.eatings}") final int eatingsCount) {
         this.dataPath = dataPath;
+        this.personDao = personDao;
         this.eatingList = getEatingList();
         this.daysCount = daysCount;
         this.eatingsCount = eatingsCount;
@@ -65,7 +72,18 @@ public class EatingDao {
                     "Entry already exists: person with id '%d' has already eaten. %s", personId, entry
             ));
         }
-        // TODO verify by days that person specialize at registration form
+
+        final Optional<Person> optionalPerson = personDao.getById(personId);
+        if (optionalPerson.isEmpty()) {
+            throw new IllegalArgumentException(format(
+                    "Person with id='%d' doesnt exists", personId
+            ));
+        }
+        if (!optionalPerson.get().isRegisteredForDay(dayId)) {
+            throw new IllegalArgumentException(format(
+                    "Person with id='%d' did not register for a day id='%d'", personId, dayId
+            ));
+        }
 
         currentDayEatingIds.add(personId);
         updateListFile();
