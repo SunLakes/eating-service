@@ -54,4 +54,14 @@ public class Entry {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Entry entry = (Entry) o;
+        return id == entry.id &&
+               day == entry.day &&
+               eating == entry.eating;
+    }
 }
