@@ -22,8 +22,8 @@ import static java.lang.String.format;
 @Component
 public class EatingDao {
 
-    private final static int DAYS_COUNT = 7;
-    private final static int EATING_COUNT = 3;
+    private final int daysCount;
+    private final int eatingsCount;
 
     private final String dataPath;
 
@@ -31,9 +31,13 @@ public class EatingDao {
 
     private final List<List<List<Integer>>> eatingList;
 
-    public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath) {
+    public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath,
+                     @Value("${count.days}") final int daysCount,
+                     @Value("${count.eatings}") final int eatingsCount) {
         this.dataPath = dataPath;
         this.eatingList = getEatingList();
+        this.daysCount = daysCount;
+        this.eatingsCount = eatingsCount;
     }
 
     public synchronized void save(final Entry entry) throws IllegalArgumentException, InstanceAlreadyExistsException {
@@ -44,14 +48,14 @@ public class EatingDao {
         if (personId == -1) {
             throw new IllegalArgumentException("Entry person id must be initialized");
         }
-        if (!(1 <= dayId && dayId <= DAYS_COUNT)) {
+        if (!(1 <= dayId && dayId <= daysCount)) {
             throw new IllegalArgumentException(format(
-                    "Day id='%d' must be in range [%d, %d]", dayId, 1, DAYS_COUNT
+                    "Day id='%d' must be in range [%d, %d]", dayId, 1, daysCount
             ));
         }
-        if (!(1 <= eatingId && eatingId <= EATING_COUNT)) {
+        if (!(1 <= eatingId && eatingId <= eatingsCount)) {
             throw new IllegalArgumentException(format(
-                    "Eating id='%d' must be in range [%d, %d]", eatingId, 1, EATING_COUNT
+                    "Eating id='%d' must be in range [%d, %d]", eatingId, 1, eatingsCount
             ));
         }
 
@@ -71,7 +75,7 @@ public class EatingDao {
         try {
             return objectMapper.readValue(new File(dataPath),
                     new TypeReference<List<List<List<Integer>>>>() {
-            });
+                    });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
