@@ -18,6 +18,9 @@ public class Entry {
         this.eating = eating;
     }
 
+    private Entry() {
+    }
+
     public int getId() {
         return id;
     }
