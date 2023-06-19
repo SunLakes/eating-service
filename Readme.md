@@ -1,4 +1,4 @@
-# The People Service Project
+# The Eating Service Project
 
 -----------------------------------------------------------------------------------
 
