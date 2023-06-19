@@ -37,7 +37,7 @@ public class EatingDao {
         this.eatingList = this.getEatingList();
     }
 
-    public synchronized void save(final Entry entry) {
+    public synchronized void save(final Entry entry) throws IllegalArgumentException {
         final int dayId = entry.getDay();
         final int eatingId = entry.getEating();
         final int personId = entry.getId();

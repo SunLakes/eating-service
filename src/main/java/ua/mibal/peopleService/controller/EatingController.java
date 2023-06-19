@@ -22,12 +22,8 @@ public class EatingController {
     }
 
     @PostMapping
-    String addEntry(@RequestBody Entry entry) {
-        try {
-            eatingDao.save(entry);
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
-        }
-        return "Ok";
+    Entry addEntry(@RequestBody Entry entry) {
+        eatingDao.save(entry);
+        return entry;
     }
 }
