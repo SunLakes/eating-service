@@ -4,7 +4,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.model.Person;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Mykhailo Balakhon
@@ -13,14 +20,48 @@ import java.util.Optional;
 @Component
 public class PersonDao {
 
-    private final String dbUrl;
+    private final Connection connection;
 
-    public PersonDao(@Value("${personDao.dbUrl}") final String dbUrl) {
-        this.dbUrl = dbUrl;
+    public PersonDao(@Value("${jdbcDriverPackage}") final String jdbcDriverPackage,
+                     @Value("${spring.datasource.url}") final String dbUrl,
+                     @Value("${spring.datasource.username}") final String user,
+                     @Value("${spring.datasource.password}") final String password) {
+        try {
+            Class.forName(jdbcDriverPackage);
+            this.connection = DriverManager.getConnection(
+                    dbUrl,
+                    user,
+                    password
+            );
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public synchronized Optional<Person> getById(final int id) {
-        // TODO
-        return Optional.empty();
+    public synchronized Optional<Person> getByBraceletId(final int id) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT id, bracelet_id, name, days " +
+                    "FROM people " +
+                    "WHERE bracelet_id = ? " +
+                    "LIMIT 1"
+            );
+            preparedStatement.setObject(1, id);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(new Person(
+                    resultSet.getInt("id"),
+                    resultSet.getInt("bracelet_id"),
+                    resultSet.getString("name"),
+                    Arrays.stream(resultSet.getString("days")
+                                    .split(","))
+                            .map(Integer::parseInt)
+                            .collect(Collectors.toSet())
+            ));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
