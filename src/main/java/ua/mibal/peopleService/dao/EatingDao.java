@@ -14,6 +14,7 @@ import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import static java.lang.String.format;
 
@@ -28,7 +29,7 @@ public class EatingDao {
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     private final String dataPath;
-    private final List<List<List<Integer>>> eatingList;
+    private final List<List<Set<Integer>>> eatingList;
 
     public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath) {
         this.dataPath = dataPath;
@@ -40,22 +41,20 @@ public class EatingDao {
         final int eatingId = entry.getEating();
         final int personId = entry.getId();
 
-        List<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
-        if (currentDayEatingIds.contains(personId)) {
+        Set<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
+        if (!currentDayEatingIds.add(personId)) {
             throw new InstanceAlreadyExistsException(format(
                     "Entry already exists: person with id '%d' has already eaten. %s", personId, entry
             ));
         }
-
-        currentDayEatingIds.add(personId);
         updateListFile();
         log.info("Added entry " + entry);
     }
 
-    private List<List<List<Integer>>> getEatingList() {
+    private List<List<Set<Integer>>> getEatingList() {
         try {
             return objectMapper.readValue(new File(dataPath),
-                    new TypeReference<List<List<List<Integer>>>>() {
+                    new TypeReference<List<List<Set<Integer>>>>() {
                     });
         } catch (IOException e) {
             throw new RuntimeException(e);
