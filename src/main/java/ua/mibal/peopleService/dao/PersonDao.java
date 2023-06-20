@@ -19,7 +19,7 @@ public class PersonDao {
         this.dbUrl = dbUrl;
     }
 
-    public Optional<Person> getById(final int id) {
+    public synchronized Optional<Person> getById(final int id) {
         // TODO
         return Optional.empty();
     }
