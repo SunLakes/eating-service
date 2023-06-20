@@ -17,9 +17,13 @@
 
 	<properties>
 		<java.version>17</java.version>
+
+		<!-- MySQL -->
+		<mysql-connector.version>8.0.33</mysql-connector.version>
 	</properties>
 
 	<dependencies>
+		<!-- Spring dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -29,6 +33,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- MySQL dependencies -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>${mysql-connector.version}</version>
 		</dependency>
 	</dependencies>
 
