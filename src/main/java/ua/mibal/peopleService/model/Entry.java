@@ -6,14 +6,14 @@ package ua.mibal.peopleService.model;
  */
 public class Entry {
 
-    private int id = -1;
+    private int braceletId = -1;
 
     private int day = -1;
 
     private int eating = -1;
 
-    public Entry(int id, int day, int eating) {
-        this.id = id;
+    public Entry(int braceletId, int day, int eating) {
+        this.braceletId = braceletId;
         this.day = day;
         this.eating = eating;
     }
@@ -21,16 +21,12 @@ public class Entry {
     private Entry() {
     }
 
-    public int getId() {
-        return id;
+    public int getBraceletId() {
+        return braceletId;
     }
 
     public int getDay() {
         return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
     }
 
     public int getEating() {
@@ -52,7 +48,7 @@ public class Entry {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Entry entry = (Entry) o;
-        return id == entry.id &&
+        return braceletId == entry.braceletId &&
                day == entry.day &&
                eating == entry.eating;
     }

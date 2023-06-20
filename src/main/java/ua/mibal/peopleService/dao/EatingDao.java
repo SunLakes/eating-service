@@ -39,12 +39,12 @@ public class EatingDao {
     public synchronized void save(final Entry entry) throws IllegalArgumentException, InstanceAlreadyExistsException {
         final int dayId = entry.getDay();
         final int eatingId = entry.getEating();
-        final int personId = entry.getId();
+        final int personBraceletId = entry.getBraceletId();
 
         Set<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
-        if (!currentDayEatingIds.add(personId)) {
+        if (!currentDayEatingIds.add(personBraceletId)) {
             throw new InstanceAlreadyExistsException(format(
-                    "Entry already exists: person with id '%d' has already eaten. %s", personId, entry
+                    "Entry already exists: person with bracelet id '%d' has already eaten. %s", personBraceletId, entry
             ));
         }
         updateListFile();
