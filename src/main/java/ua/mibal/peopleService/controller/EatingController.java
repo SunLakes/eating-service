@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ua.mibal.peopleService.component.EatingEntryValidator;
 import ua.mibal.peopleService.dao.EatingDao;
 import ua.mibal.peopleService.model.Entry;
 
@@ -19,12 +20,16 @@ public class EatingController {
 
     private final EatingDao eatingDao;
 
-    public EatingController(EatingDao eatingDao) {
+    private final EatingEntryValidator eatingEntryValidator;
+
+    public EatingController(EatingDao eatingDao, EatingEntryValidator eatingEntryValidator) {
         this.eatingDao = eatingDao;
+        this.eatingEntryValidator = eatingEntryValidator;
     }
 
     @PostMapping
     Entry addEntry(@RequestBody Entry entry) throws InstanceAlreadyExistsException {
+        eatingEntryValidator.validate(entry);
         eatingDao.save(entry);
         return entry;
     }

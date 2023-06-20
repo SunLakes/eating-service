@@ -21,6 +21,6 @@ public class PersonDao {
 
     public Optional<Person> getById(final int id) {
         // TODO
-        return Optional.of(new Person());
+        return Optional.empty();
     }
 }
