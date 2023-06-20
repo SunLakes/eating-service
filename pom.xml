@@ -10,9 +10,9 @@
 	</parent>
 
 	<groupId>ua.mibal</groupId>
-	<artifactId>people-service</artifactId>
+	<artifactId>eating-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>people-service</name>
+	<name>eating-service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
