@@ -8,6 +8,8 @@ import java.util.Set;
  */
 public class Person {
 
+    public static final Person emptyPerson = new Person(-1, -1, "null", Set.of());
+
     private int id;
 
     private int braceletId;

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.model.Entry;
+import ua.mibal.peopleService.model.Person;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
@@ -29,11 +30,14 @@ public class EatingDao {
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     private final String dataPath;
+    private final PersonDao personDao;
     private final List<List<Set<Integer>>> eatingList;
 
-    public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath) {
+    public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath,
+                     final PersonDao personDao) {
         this.dataPath = dataPath;
         this.eatingList = getEatingList();
+        this.personDao = personDao;
     }
 
     public synchronized void save(final Entry entry) throws IllegalArgumentException, InstanceAlreadyExistsException {
@@ -42,13 +46,16 @@ public class EatingDao {
         final int personBraceletId = entry.getBraceletId();
 
         Set<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
+        Person person = personDao.getByBraceletId(personBraceletId)
+                .orElse(Person.emptyPerson);
         if (!currentDayEatingIds.add(personBraceletId)) {
             throw new InstanceAlreadyExistsException(format(
-                    "Entry already exists: person with bracelet id '%d' has already eaten. %s", personBraceletId, entry
+                    "Entry already exists: person with bracelet id '%d' and name '%s' has already eaten. %s %s",
+                    personBraceletId, person.getName(), entry, person
             ));
         }
         updateListFile();
-        log.info("Added entry " + entry);
+        log.info("Added entry " + entry + person);
     }
 
     private List<List<Set<Integer>>> getEatingList() {
