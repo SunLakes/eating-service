@@ -16,8 +16,6 @@
 
 package ua.mibal.peopleService.model;
 
-import org.springframework.http.HttpStatus;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,13 +26,13 @@ import java.util.Date;
  */
 public class ApiError {
 
-    private HttpStatus status;
+    private String status;
 
     private String timestamp;
 
     private String message;
 
-    public ApiError(HttpStatus status, Throwable e) {
+    public ApiError(String status, Throwable e) {
         Date date = Calendar.getInstance().getTime();
         this.timestamp = new SimpleDateFormat("yyyy-MM-dd hh:mm").format(date);
         this.status = status;
@@ -44,7 +42,7 @@ public class ApiError {
     private ApiError() {
     }
 
-    public HttpStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
