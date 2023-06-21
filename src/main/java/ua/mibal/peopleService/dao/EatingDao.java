@@ -60,6 +60,7 @@ public class EatingDao {
 
     private List<List<Set<Integer>>> getEatingList() {
         try {
+            log.info("Loaded list data from: " + dataPath);
             return objectMapper.readValue(new File(dataPath),
                     new TypeReference<List<List<Set<Integer>>>>() {
                     });

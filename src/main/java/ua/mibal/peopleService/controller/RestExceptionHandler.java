@@ -21,18 +21,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(InstanceAlreadyExistsException.class)
     protected ResponseEntity<ApiError> handleInstanceAlreadyExistsException(InstanceAlreadyExistsException e) {
         HttpStatus httpStatus = HttpStatus.ALREADY_REPORTED;
-        return new ResponseEntity<>(
+        ResponseEntity<ApiError> response = new ResponseEntity<>(
                 new ApiError(httpStatus, e),
                 httpStatus
         );
+        logger.error("Error " + response);
+        return response;
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<ApiError> handleIllegalArgumentException(IllegalArgumentException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-        return new ResponseEntity<>(
+        ResponseEntity<ApiError> response = new ResponseEntity<>(
                 new ApiError(httpStatus, e),
                 httpStatus
         );
+        logger.error("Error " + response);
+        return response;
     }
 }
