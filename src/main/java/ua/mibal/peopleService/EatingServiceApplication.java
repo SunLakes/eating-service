@@ -20,10 +20,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PeopleServiceApplication {
+public class EatingServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PeopleServiceApplication.class, args);
+		SpringApplication.run(EatingServiceApplication.class, args);
 	}
 
 }
