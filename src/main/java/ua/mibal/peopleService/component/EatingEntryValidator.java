@@ -53,7 +53,8 @@ public class EatingEntryValidator {
         final int braceletId = entry.getBraceletId();
 
         if (braceletId == -1) {
-            throw new IllegalArgumentException("Entry person bracelet id must be initialized");
+            throw new IllegalArgumentException(
+                    "Person bracelet id must be initialized");
         }
         if (!(1 <= dayId && dayId <= daysCount)) {
             throw new IllegalArgumentException(format(
@@ -72,9 +73,11 @@ public class EatingEntryValidator {
                     "Person with bracelet id='%d' doesnt exists", braceletId
             ));
         }
-        if (!optionalPerson.get().isRegisteredForDay(dayId)) {
+        final Person person = optionalPerson.get();
+        if (!person.isRegisteredForDay(dayId)) {
             throw new IllegalArgumentException(format(
-                    "Person with bracelet id='%d' did not register for a day id='%d'", braceletId, dayId
+                    "Person with bracelet id='%d' and name='%s' did not register for a day id='%d' %s",
+                    braceletId, person.getName(), dayId, person
             ));
         }
     }
