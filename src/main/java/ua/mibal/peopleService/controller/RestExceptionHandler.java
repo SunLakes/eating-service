@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ua.mibal.peopleService.model.ApiError;
 
@@ -31,7 +30,6 @@ import javax.management.InstanceAlreadyExistsException;
  * @link t.me/mibal_ua
  */
 @ControllerAdvice
-@RestController
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InstanceAlreadyExistsException.class)
