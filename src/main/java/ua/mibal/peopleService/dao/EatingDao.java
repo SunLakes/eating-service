@@ -71,7 +71,7 @@ public class EatingDao {
             ));
         }
         updateListFile();
-        log.info("Added entry " + entry + person);
+        log.info(format("Added entry [%s], [%s]", entry, person));
     }
 
     private List<List<Set<Integer>>> getEatingList() {
