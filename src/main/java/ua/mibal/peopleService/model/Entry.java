@@ -16,56 +16,60 @@
 
 package ua.mibal.peopleService.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 /**
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
 public class Entry {
 
-    private int braceletId = -1;
+    @NotNull(message = "Provide a bracelet id")
+    @Min(value = 1, message = "Bracelet id must be greater than 0")
+    private Integer braceletId;
 
-    private int day = -1;
+    @NotNull(message = "Provide a day id")
+    @Min(value = 1, message = "Day id must be in range [1, 7]")
+    @Max(value = 7, message = "Day id must be in range [1, 7]")
+    private Integer dayId;
 
-    private int eating = -1;
+    @NotNull(message = "Provide an eating id")
+    @Min(value = 1, message = "Eating id must be in range [1, 3]")
+    @Max(value = 3, message = "Eating id must be in range [1, 3]")
+    private Integer eatingId;
 
-    public Entry(int braceletId, int day, int eating) {
+    public Entry(@NotNull(message = "Provide a bracelet id") Integer braceletId,
+                 @NotNull(message = "Provide a day id") Integer dayId,
+                 @NotNull(message = "Provide an eating id") Integer eatingId) {
         this.braceletId = braceletId;
-        this.day = day;
-        this.eating = eating;
+        this.dayId = dayId;
+        this.eatingId = eatingId;
     }
 
     private Entry() {
     }
 
-    public int getBraceletId() {
+    public Integer getBraceletId() {
         return braceletId;
     }
 
-    public int getDay() {
-        return day;
+    public Integer getDayId() {
+        return dayId;
     }
 
-    public int getEating() {
-        return eating;
+    public Integer getEatingId() {
+        return eatingId;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Entry{");
         sb.append("braceletId=").append(braceletId);
-        sb.append(", day=").append(day);
-        sb.append(", eating=").append(eating);
+        sb.append(", dayId=").append(dayId);
+        sb.append(", eatingId=").append(eatingId);
         sb.append('}');
         return sb.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        Entry entry = (Entry) o;
-        return braceletId == entry.braceletId &&
-               day == entry.day &&
-               eating == entry.eating;
     }
 }

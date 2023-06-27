@@ -16,6 +16,7 @@
 
 package ua.mibal.peopleService.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +43,7 @@ public class EatingController {
     }
 
     @PostMapping
-    Entry addEntry(@RequestBody Entry entry) {
+    Entry addEntry(@Valid @RequestBody Entry entry) {
         eatingEntryValidator.validate(entry);
         eatingDao.save(entry);
         return entry;

@@ -57,8 +57,8 @@ public class EatingDao {
     }
 
     public synchronized void save(final Entry entry) {
-        final int dayId = entry.getDay();
-        final int eatingId = entry.getEating();
+        final int dayId = entry.getDayId();
+        final int eatingId = entry.getEatingId();
         final int personBraceletId = entry.getBraceletId();
 
         Set<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
