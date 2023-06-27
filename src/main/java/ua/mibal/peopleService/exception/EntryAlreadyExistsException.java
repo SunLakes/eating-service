@@ -17,7 +17,7 @@
 package ua.mibal.peopleService.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ua.mibal.peopleService.model.Entry;
 import ua.mibal.peopleService.model.Person;
 
@@ -27,13 +27,13 @@ import static java.lang.String.format;
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
-public class EntryAlreadyExistsException extends ResponseStatusException {
+@ResponseStatus(HttpStatus.ALREADY_REPORTED)
+public class EntryAlreadyExistsException extends RuntimeException {
 
     public EntryAlreadyExistsException(Entry entry, Person person) {
-        super(
-                HttpStatus.ALREADY_REPORTED,
-                format("Entry already exists: person with bracelet id '%d' and name '%s' has already eaten. %s %s",
-                        entry.getBraceletId(), person.getName(), entry, person)
-        );
+        super(format(
+                "Entry already exists: person with bracelet id '%d' and name '%s' has already eaten. %s %s",
+                entry.getBraceletId(), person.getName(), entry, person
+        ));
     }
 }

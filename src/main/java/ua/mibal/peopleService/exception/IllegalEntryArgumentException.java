@@ -17,18 +17,16 @@
 package ua.mibal.peopleService.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
-public class IllegalEntryArgumentException extends ResponseStatusException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class IllegalEntryArgumentException extends RuntimeException {
 
     public IllegalEntryArgumentException(String message) {
-        super(
-                HttpStatus.BAD_REQUEST,
-                message
-        );
+        super(message);
     }
 }
