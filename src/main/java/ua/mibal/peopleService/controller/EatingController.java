@@ -24,8 +24,6 @@ import ua.mibal.peopleService.component.EatingEntryValidator;
 import ua.mibal.peopleService.dao.EatingDao;
 import ua.mibal.peopleService.model.Entry;
 
-import javax.management.InstanceAlreadyExistsException;
-
 /**
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
@@ -44,7 +42,7 @@ public class EatingController {
     }
 
     @PostMapping
-    Entry addEntry(@RequestBody Entry entry) throws InstanceAlreadyExistsException {
+    Entry addEntry(@RequestBody Entry entry) {
         eatingEntryValidator.validate(entry);
         eatingDao.save(entry);
         return entry;

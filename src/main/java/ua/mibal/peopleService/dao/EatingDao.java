@@ -24,10 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ua.mibal.peopleService.exception.EntryAlreadyExistsException;
 import ua.mibal.peopleService.model.Entry;
 import ua.mibal.peopleService.model.Person;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -56,7 +56,7 @@ public class EatingDao {
         this.personDao = personDao;
     }
 
-    public synchronized void save(final Entry entry) throws IllegalArgumentException, InstanceAlreadyExistsException {
+    public synchronized void save(final Entry entry) {
         final int dayId = entry.getDay();
         final int eatingId = entry.getEating();
         final int personBraceletId = entry.getBraceletId();
@@ -65,10 +65,7 @@ public class EatingDao {
         Person person = personDao.getByBraceletId(personBraceletId)
                 .orElse(Person.emptyPerson);
         if (!currentDayEatingIds.add(personBraceletId)) {
-            throw new InstanceAlreadyExistsException(format(
-                    "Entry already exists: person with bracelet id '%d' and name '%s' has already eaten. %s %s",
-                    personBraceletId, person.getName(), entry, person
-            ));
+            throw new EntryAlreadyExistsException(entry, person);
         }
         updateListFile();
         log.info(format("Added entry [%s], [%s]", entry, person));

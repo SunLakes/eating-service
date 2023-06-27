@@ -19,6 +19,7 @@ package ua.mibal.peopleService.component;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.dao.PersonDao;
+import ua.mibal.peopleService.exception.IllegalEntryArgumentException;
 import ua.mibal.peopleService.model.Entry;
 import ua.mibal.peopleService.model.Person;
 
@@ -53,29 +54,29 @@ public class EatingEntryValidator {
         final int braceletId = entry.getBraceletId();
 
         if (braceletId == -1) {
-            throw new IllegalArgumentException(
+            throw new IllegalEntryArgumentException(
                     "Person bracelet id must be initialized");
         }
         if (!(1 <= dayId && dayId <= daysCount)) {
-            throw new IllegalArgumentException(format(
+            throw new IllegalEntryArgumentException(format(
                     "Day id='%d' must be in range [%d, %d]", dayId, 1, daysCount
             ));
         }
         if (!(1 <= eatingId && eatingId <= eatingsCount)) {
-            throw new IllegalArgumentException(format(
+            throw new IllegalEntryArgumentException(format(
                     "Eating id='%d' must be in range [%d, %d]", eatingId, 1, eatingsCount
             ));
         }
 
         final Optional<Person> optionalPerson = personDao.getByBraceletId(braceletId);
         if (optionalPerson.isEmpty()) {
-            throw new IllegalArgumentException(format(
+            throw new IllegalEntryArgumentException(format(
                     "Person with bracelet id='%d' doesnt exists", braceletId
             ));
         }
         final Person person = optionalPerson.get();
         if (!person.isRegisteredForDay(dayId)) {
-            throw new IllegalArgumentException(format(
+            throw new IllegalEntryArgumentException(format(
                     "Person with bracelet id='%d' and name='%s' did not register for a day id='%d' %s",
                     braceletId, person.getName(), dayId, person
             ));
