@@ -24,9 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ua.mibal.peopleService.exception.EntryAlreadyExistsException;
 import ua.mibal.peopleService.model.Entry;
 import ua.mibal.peopleService.model.Person;
+import ua.mibal.peopleService.model.exception.EntryAlreadyExistsException;
 
 import java.io.File;
 import java.io.IOException;

@@ -19,9 +19,9 @@ package ua.mibal.peopleService.component;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.dao.PersonDao;
-import ua.mibal.peopleService.exception.IllegalEntryArgumentException;
 import ua.mibal.peopleService.model.Entry;
 import ua.mibal.peopleService.model.Person;
+import ua.mibal.peopleService.model.exception.IllegalEntryArgumentException;
 
 import java.util.Optional;
 
