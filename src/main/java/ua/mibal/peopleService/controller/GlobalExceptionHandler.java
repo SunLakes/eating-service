@@ -21,7 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ua.mibal.peopleService.model.ApiError;
@@ -34,7 +34,7 @@ import java.util.List;
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpStatusCode status,
                                                                   WebRequest request) {
         List<String> errors = e.getBindingResult()
-                .getFieldErrors()
+                .getAllErrors()
                 .stream()
                 .map(ex -> ex.getDefaultMessage())
                 .toList();
