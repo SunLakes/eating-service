@@ -21,12 +21,14 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import ua.mibal.peopleService.model.annotation.IdExists;
 import ua.mibal.peopleService.model.annotation.PersonRegisteredForDay;
+import ua.mibal.peopleService.model.annotation.Unique;
 
 /**
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
 @PersonRegisteredForDay
+@Unique
 public class Entry {
 
     @NotNull(message = "Provide a bracelet id")

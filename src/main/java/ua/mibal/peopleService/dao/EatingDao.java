@@ -52,19 +52,16 @@ public class EatingDao {
         this.personDao = personDao;
     }
 
-    public synchronized void save(final Entry entry) {
+    public synchronized Entry save(final Entry entry) {
         final int dayId = entry.getDayId();
         final int eatingId = entry.getEatingId();
         final int personBraceletId = entry.getBraceletId();
 
         Set<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
-        Person person = personDao.getByBraceletId(personBraceletId)
-                .orElse(Person.emptyPerson);
-        if (!currentDayEatingIds.add(personBraceletId)) {
-            throw new EntryAlreadyExistsException(entry, person);
-        }
+        currentDayEatingIds.add(personBraceletId);
         updateListFile();
-        log.info(format("Added entry [%s], [%s]", entry, person));
+
+        return entry;
     }
 
     private List<List<Set<Integer>>> getEatingList() {

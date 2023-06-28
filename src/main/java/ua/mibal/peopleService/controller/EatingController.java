@@ -40,7 +40,6 @@ public class EatingController {
 
     @PostMapping
     Entry addEntry(@Valid @RequestBody Entry entry) {
-        eatingDao.save(entry);
-        return entry;
+        return eatingDao.save(entry);
     }
 }
