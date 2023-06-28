@@ -42,14 +42,11 @@ public class EatingDao {
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     private final String dataPath;
-    private final PersonDao personDao;
     private final List<List<Set<Integer>>> eatingList;
 
-    public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath,
-                     final PersonDao personDao) {
+    public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath) {
         this.dataPath = dataPath;
         this.eatingList = getEatingList();
-        this.personDao = personDao;
     }
 
     public synchronized Entry save(final Entry entry) {
