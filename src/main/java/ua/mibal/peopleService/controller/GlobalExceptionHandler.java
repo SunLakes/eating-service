@@ -47,7 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .stream()
                 .map(ex -> ex.getDefaultMessage())
                 .toList();
-        return ResponseEntity.ok(new ApiError(
+        return ResponseEntity.status(status).body(new ApiError(
                 Timestamp.from(Instant.now()).toString(),
                 status.value(),
                 HttpStatus.valueOf(status.value()).getReasonPhrase(),
