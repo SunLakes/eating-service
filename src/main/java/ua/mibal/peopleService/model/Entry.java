@@ -16,9 +16,9 @@
 
 package ua.mibal.peopleService.model;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Range;
 import ua.mibal.peopleService.model.annotation.IdExists;
 import ua.mibal.peopleService.model.annotation.PersonRegisteredForDay;
 import ua.mibal.peopleService.model.annotation.Unique;
@@ -32,18 +32,24 @@ import ua.mibal.peopleService.model.annotation.Unique;
 public class Entry {
 
     @NotNull(message = "Provide a bracelet id")
-    @Min(value = 1, message = "Bracelet id must be greater than 0")
+    @Min(value = 1, message = "Bracelet_id=${validatedValue} must be greater or equals than {value}")
     @IdExists
     private Integer braceletId;
 
     @NotNull(message = "Provide a day id")
-    @Min(value = 1, message = "Day id must be in range [1, 7]")
-    @Max(value = 7, message = "Day id must be in range [1, 7]")
+    @Range(
+            min = 1,
+            max = 7,
+            message = "Day_id=${validatedValue} must be in range [{min}, {max}]"
+    )
     private Integer dayId;
 
     @NotNull(message = "Provide an eating id")
-    @Min(value = 1, message = "Eating id must be in range [1, 3]")
-    @Max(value = 3, message = "Eating id must be in range [1, 3]")
+    @Range(
+            min = 1,
+            max = 3,
+            message = "Eating_id=${validatedValue} must be in range [{min}, {max}]"
+    )
     private Integer eatingId;
 
     public Entry(@NotNull(message = "Provide a bracelet id") Integer braceletId,
