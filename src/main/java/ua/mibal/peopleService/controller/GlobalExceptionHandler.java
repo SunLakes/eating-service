@@ -38,19 +38,15 @@ import java.util.List;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatusCode status,
-                                                                  WebRequest request) {
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
+                                                               HttpHeaders headers,
+                                                               HttpStatusCode status,
+                                                               WebRequest request) {
         List<String> errors = e.getBindingResult()
                 .getAllErrors()
                 .stream()
                 .map(ex -> ex.getDefaultMessage())
                 .toList();
-
-        logger.warn("Handled error");
-        errors.forEach(logger::warn);
-
         return ResponseEntity.ok(new ApiError(
                 Timestamp.from(Instant.now()).toString(),
                 status.value(),
