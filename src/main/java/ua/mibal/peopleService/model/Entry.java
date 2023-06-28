@@ -19,15 +19,19 @@ package ua.mibal.peopleService.model;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import ua.mibal.peopleService.model.annotation.IdExists;
+import ua.mibal.peopleService.model.annotation.PersonRegisteredForDay;
 
 /**
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
+@PersonRegisteredForDay
 public class Entry {
 
     @NotNull(message = "Provide a bracelet id")
     @Min(value = 1, message = "Bracelet id must be greater than 0")
+    @IdExists
     private Integer braceletId;
 
     @NotNull(message = "Provide a day id")
