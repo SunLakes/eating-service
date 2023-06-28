@@ -16,9 +16,11 @@
 
 package ua.mibal.peopleService.aspect;
 
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -39,37 +41,39 @@ public class LoggingAspect {
 
     private final PersonDao personDao;
 
+    private final static Logger exceptionHandlerLogger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private final static Logger eatingDaoLogger = LoggerFactory.getLogger(EatingDao.class);
+
     public LoggingAspect(PersonDao personDao) {
         this.personDao = personDao;
     }
 
-    @Pointcut("execution(* ua.mibal.peopleService.controller.GlobalExceptionHandler.handleMethodArgumentNotValid(..))")
-    void validationExceptionHandlingPointcut() {
-    }
-
-    @Pointcut("execution(* ua.mibal.peopleService.dao.EatingDao.save(..))")
-    void addingEntryPointcut() {
-    }
-
     @AfterReturning(
-            pointcut = "validationExceptionHandlingPointcut()",
+            pointcut = "execution(* ua.mibal.peopleService.controller.GlobalExceptionHandler.handleMethodArgumentNotValid(..))",
             returning = "error"
     )
     void afterValidationExceptionHandlingAdvice(ResponseEntity<Object> error) {
-        LoggerFactory.getLogger(GlobalExceptionHandler.class).warn(
+        exceptionHandlerLogger.warn(
                 "Handled errors: " + ((ApiError) error.getBody()).getMessage()
         );
     }
 
     @AfterReturning(
-            pointcut = "addingEntryPointcut()",
+            pointcut = "execution(* ua.mibal.peopleService.dao.EatingDao.save(..))",
             returning = "entry"
     )
     void afterAddingEntryAdvice(Entry entry) {
         Person person = personDao.getByBraceletId(entry.getBraceletId())
                 .orElse(Person.emptyPerson);
-        EatingDao.log.info(
+        eatingDaoLogger.info(
                 "Added entry " + entry + ". " + person
+        );
+    }
+
+    @After("execution(* ua.mibal.peopleService.dao.EatingDao.getEatingList(..))")
+    void afterReadingFromFileAdvice(JoinPoint joinPoint) {
+        eatingDaoLogger.info(
+                "Loaded list data from: " + joinPoint.getArgs()[0]
         );
     }
 }

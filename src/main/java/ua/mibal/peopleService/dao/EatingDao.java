@@ -20,8 +20,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.model.Entry;
@@ -38,7 +36,6 @@ import java.util.Set;
 @Component
 public class EatingDao {
 
-    public final static Logger log = LoggerFactory.getLogger(EatingDao.class);
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     private final String dataPath;
@@ -46,7 +43,7 @@ public class EatingDao {
 
     public EatingDao(@Value("${eatingDao.dataPath}") final String dataPath) {
         this.dataPath = dataPath;
-        this.eatingList = getEatingList();
+        this.eatingList = getEatingList(dataPath);
     }
 
     public synchronized Entry save(final Entry entry) {
@@ -61,10 +58,9 @@ public class EatingDao {
         return entry;
     }
 
-    private List<List<Set<Integer>>> getEatingList() {
+    public List<List<Set<Integer>>> getEatingList(String path) {
         try {
-            log.info("Loaded list data from: " + dataPath);
-            return objectMapper.readValue(new File(dataPath),
+            return objectMapper.readValue(new File(path),
                     new TypeReference<List<List<Set<Integer>>>>() {
                     });
         } catch (IOException e) {
