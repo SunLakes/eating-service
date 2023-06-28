@@ -17,6 +17,7 @@
 package ua.mibal.peopleService.model;
 
 /**
+ * @version 2.0
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */

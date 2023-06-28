@@ -24,6 +24,7 @@ import ua.mibal.peopleService.model.annotation.PersonRegisteredForDay;
 import ua.mibal.peopleService.model.annotation.Unique;
 
 /**
+ * @version 2.0
  * @author Mykhailo Balakhon
  * @link t.me/mibal_ua
  */
