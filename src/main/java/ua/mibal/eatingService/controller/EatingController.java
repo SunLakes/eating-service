@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.controller;
+package ua.mibal.eatingService.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.mibal.peopleService.dao.EatingDao;
-import ua.mibal.peopleService.model.Entry;
+import ua.mibal.eatingService.dao.EatingDao;
+import ua.mibal.eatingService.model.Entry;
 
 /**
  * @author Mykhailo Balakhon

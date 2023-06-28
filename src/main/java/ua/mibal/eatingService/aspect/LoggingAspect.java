@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.aspect;
+package ua.mibal.eatingService.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -23,12 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ua.mibal.peopleService.controller.GlobalExceptionHandler;
-import ua.mibal.peopleService.dao.EatingDao;
-import ua.mibal.peopleService.dao.PersonDao;
-import ua.mibal.peopleService.model.ApiError;
-import ua.mibal.peopleService.model.Entry;
-import ua.mibal.peopleService.model.Person;
+import ua.mibal.eatingService.controller.GlobalExceptionHandler;
+import ua.mibal.eatingService.dao.EatingDao;
+import ua.mibal.eatingService.dao.PersonDao;
+import ua.mibal.eatingService.model.ApiError;
+import ua.mibal.eatingService.model.Entry;
+import ua.mibal.eatingService.model.Person;
 
 /**
  * @author Mykhailo Balakhon
@@ -48,7 +48,7 @@ public class LoggingAspect {
     }
 
     @AfterReturning(
-            pointcut = "execution(* ua.mibal.peopleService.controller.GlobalExceptionHandler.handleMethodArgumentNotValid(..))",
+            pointcut = "execution(* ua.mibal.eatingService.controller.GlobalExceptionHandler.handleMethodArgumentNotValid(..))",
             returning = "error"
     )
     void afterValidationExceptionHandlingAdvice(ResponseEntity<Object> error) {
@@ -58,7 +58,7 @@ public class LoggingAspect {
     }
 
     @AfterReturning(
-            pointcut = "execution(* ua.mibal.peopleService.dao.EatingDao.save(..))",
+            pointcut = "execution(* ua.mibal.eatingService.dao.EatingDao.save(..))",
             returning = "entry"
     )
     void afterAddingEntryAdvice(Entry entry) {
@@ -69,7 +69,7 @@ public class LoggingAspect {
         );
     }
 
-    @AfterReturning("execution(* ua.mibal.peopleService.dao.EatingDao.getEatingList(..))")
+    @AfterReturning("execution(* ua.mibal.eatingService.dao.EatingDao.getEatingList(..))")
     void afterReadingFromFileAdvice(JoinPoint joinPoint) {
         eatingDaoLogger.info(
                 "Loaded list data from: " + joinPoint.getArgs()[0]

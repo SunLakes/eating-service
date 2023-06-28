@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.model.annotation;
+package ua.mibal.eatingService.model.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import ua.mibal.peopleService.component.UniqueEntryValidator;
+import ua.mibal.eatingService.component.UniqueEntryValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

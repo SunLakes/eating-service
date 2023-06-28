@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.model;
+package ua.mibal.eatingService.model;
 
 import java.util.Set;
 

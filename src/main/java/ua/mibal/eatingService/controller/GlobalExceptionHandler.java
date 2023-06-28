@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.controller;
+package ua.mibal.eatingService.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ua.mibal.peopleService.model.ApiError;
+import ua.mibal.eatingService.model.ApiError;
 
 import java.sql.Timestamp;
 import java.time.Instant;

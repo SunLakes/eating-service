@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.dao;
+package ua.mibal.eatingService.dao;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ua.mibal.peopleService.model.Entry;
+import ua.mibal.eatingService.model.Entry;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,9 +60,11 @@ public class EatingDao {
 
     public List<List<Set<Integer>>> getEatingList(String path) {
         try {
-            return objectMapper.readValue(new File(path),
+            return objectMapper.readValue(
+                    new File(path),
                     new TypeReference<List<List<Set<Integer>>>>() {
-                    });
+                    }
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

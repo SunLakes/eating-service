@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.model;
+package ua.mibal.eatingService.model;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Range;
-import ua.mibal.peopleService.model.annotation.IdExists;
-import ua.mibal.peopleService.model.annotation.PersonRegisteredForDay;
-import ua.mibal.peopleService.model.annotation.Unique;
+import ua.mibal.eatingService.model.annotation.IdExists;
+import ua.mibal.eatingService.model.annotation.PersonRegisteredForDay;
+import ua.mibal.eatingService.model.annotation.Unique;
 
 /**
  * @version 2.0

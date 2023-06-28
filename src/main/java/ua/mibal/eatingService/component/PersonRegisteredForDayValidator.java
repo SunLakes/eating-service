@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.component;
+package ua.mibal.eatingService.component;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
-import ua.mibal.peopleService.dao.PersonDao;
-import ua.mibal.peopleService.model.Entry;
-import ua.mibal.peopleService.model.Person;
-import ua.mibal.peopleService.model.annotation.PersonRegisteredForDay;
+import ua.mibal.eatingService.dao.PersonDao;
+import ua.mibal.eatingService.model.Entry;
+import ua.mibal.eatingService.model.Person;
+import ua.mibal.eatingService.model.annotation.PersonRegisteredForDay;
 
 /**
  * @author Mykhailo Balakhon

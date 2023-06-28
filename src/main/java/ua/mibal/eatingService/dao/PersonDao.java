@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.dao;
+package ua.mibal.eatingService.dao;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ua.mibal.peopleService.model.Person;
+import ua.mibal.eatingService.model.Person;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

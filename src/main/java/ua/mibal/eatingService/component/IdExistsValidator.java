@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package ua.mibal.peopleService.component;
+package ua.mibal.eatingService.component;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import ua.mibal.peopleService.dao.PersonDao;
-import ua.mibal.peopleService.model.annotation.IdExists;
+import ua.mibal.eatingService.dao.PersonDao;
+import ua.mibal.eatingService.model.annotation.IdExists;
 
 /**
  * @author Mykhailo Balakhon
