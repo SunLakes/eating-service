@@ -41,7 +41,7 @@ public class LoggingAspect {
             pointcut = "validationExceptionHandlingPointcut()",
             returning = "error"
     )
-    void beforeValidationExceptionHandlingAdvice(ResponseEntity<Object> error) {
+    void afterValidationExceptionHandlingAdvice(ResponseEntity<Object> error) {
         LoggerFactory.getLogger(GlobalExceptionHandler.class).warn(
                 "Handled errors: " + ((ApiError) error.getBody()).getMessage()
         );
