@@ -17,7 +17,6 @@
 package ua.mibal.peopleService.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
@@ -70,7 +69,7 @@ public class LoggingAspect {
         );
     }
 
-    @After("execution(* ua.mibal.peopleService.dao.EatingDao.getEatingList(..))")
+    @AfterReturning("execution(* ua.mibal.peopleService.dao.EatingDao.getEatingList(..))")
     void afterReadingFromFileAdvice(JoinPoint joinPoint) {
         eatingDaoLogger.info(
                 "Loaded list data from: " + joinPoint.getArgs()[0]
