@@ -18,8 +18,11 @@ package ua.mibal.peopleService.component;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
 import ua.mibal.peopleService.dao.EatingDao;
+import ua.mibal.peopleService.dao.PersonDao;
 import ua.mibal.peopleService.model.Entry;
+import ua.mibal.peopleService.model.Person;
 import ua.mibal.peopleService.model.annotation.Unique;
 
 /**
@@ -30,12 +33,22 @@ public class UniqueEntryValidator implements ConstraintValidator<Unique, Entry> 
 
     private final EatingDao eatingDao;
 
-    public UniqueEntryValidator(EatingDao eatingDao) {
+    private final PersonDao personDao;
+
+    public UniqueEntryValidator(EatingDao eatingDao, PersonDao personDao) {
         this.eatingDao = eatingDao;
+        this.personDao = personDao;
     }
 
     @Override
     public boolean isValid(Entry entry, ConstraintValidatorContext context) {
-        return !eatingDao.isExists(entry);
+        if (eatingDao.isExists(entry)) {
+            Person person = personDao.getByBraceletId(entry.getBraceletId())
+                    .orElse(Person.emptyPerson);
+            HibernateConstraintValidatorContext h = context.unwrap(HibernateConstraintValidatorContext.class);
+            h.addExpressionVariable("personByBraceletId", person);
+            return false;
+        }
+        return true;
     }
 }

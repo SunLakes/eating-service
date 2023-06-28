@@ -18,12 +18,11 @@ package ua.mibal.peopleService.component;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.hibernate.validator.constraintvalidation.HibernateConstraintValidatorContext;
 import ua.mibal.peopleService.dao.PersonDao;
 import ua.mibal.peopleService.model.Entry;
 import ua.mibal.peopleService.model.Person;
 import ua.mibal.peopleService.model.annotation.PersonRegisteredForDay;
-
-import java.util.Optional;
 
 /**
  * @author Mykhailo Balakhon
@@ -42,8 +41,13 @@ public class PersonRegisteredForDayValidator implements ConstraintValidator<Pers
         int dayId = entry.getDayId();
         int braceletId = entry.getBraceletId();
 
-        Optional<Person> optionalPerson = personDao.getByBraceletId(braceletId);
-        return optionalPerson.isPresent() &&
-               optionalPerson.get().isRegisteredForDay(dayId);
+        Person person = personDao.getByBraceletId(braceletId)
+                .orElse(Person.emptyPerson);
+        if (!person.isRegisteredForDay(dayId)) {
+            HibernateConstraintValidatorContext validatorContext = context.unwrap(HibernateConstraintValidatorContext.class);
+            validatorContext.addExpressionVariable("personByBraceletId", person);
+            return false;
+        }
+        return true;
     }
 }

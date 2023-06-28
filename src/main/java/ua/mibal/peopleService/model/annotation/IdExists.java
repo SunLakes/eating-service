@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IdExists {
 
-    String message() default "Person doesn't exists";
+    String message() default "Person with bracelet_id=${validatedValue} doesn't exists";
 
     Class<?>[] groups() default {};
 

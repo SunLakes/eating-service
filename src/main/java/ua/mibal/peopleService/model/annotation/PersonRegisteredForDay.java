@@ -34,7 +34,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PersonRegisteredForDay {
 
-    String message() default "Person did not register for this day";
+    String message() default "Person with bracelet_id=${validatedValue.braceletId} " +
+                             "did not register for day=${validatedValue.dayId}. " +
+                             "${personByBraceletId}";
 
     Class<?>[] groups() default {};
 
