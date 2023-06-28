@@ -25,15 +25,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ua.mibal.peopleService.model.Entry;
-import ua.mibal.peopleService.model.Person;
-import ua.mibal.peopleService.model.exception.EntryAlreadyExistsException;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
-
-import static java.lang.String.format;
 
 /**
  * @author Mykhailo Balakhon
@@ -88,6 +84,19 @@ public class EatingDao {
             writer.writeValue(new File(dataPath), eatingList);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isExists(Entry entry) {
+        final int dayId = entry.getDayId();
+        final int eatingId = entry.getEatingId();
+        final int braceletId = entry.getBraceletId();
+
+        try {
+            Set<Integer> currentDayEatingIds = eatingList.get(dayId - 1).get(eatingId - 1);
+            return currentDayEatingIds.contains(braceletId);
+        } catch (Exception e) {
+            return false;
         }
     }
 }
