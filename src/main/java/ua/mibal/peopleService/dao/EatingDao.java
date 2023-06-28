@@ -38,7 +38,7 @@ import java.util.Set;
 @Component
 public class EatingDao {
 
-    private final static Logger log = LoggerFactory.getLogger(EatingDao.class);
+    public final static Logger log = LoggerFactory.getLogger(EatingDao.class);
     private final static ObjectMapper objectMapper = new ObjectMapper();
 
     private final String dataPath;
