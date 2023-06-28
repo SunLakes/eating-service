@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.mibal.peopleService.component.EatingEntryValidator;
 import ua.mibal.peopleService.dao.EatingDao;
 import ua.mibal.peopleService.model.Entry;
 
@@ -35,16 +34,12 @@ public class EatingController {
 
     private final EatingDao eatingDao;
 
-    private final EatingEntryValidator eatingEntryValidator;
-
-    public EatingController(EatingDao eatingDao, EatingEntryValidator eatingEntryValidator) {
+    public EatingController(EatingDao eatingDao) {
         this.eatingDao = eatingDao;
-        this.eatingEntryValidator = eatingEntryValidator;
     }
 
     @PostMapping
     Entry addEntry(@Valid @RequestBody Entry entry) {
-        eatingEntryValidator.validate(entry);
         eatingDao.save(entry);
         return entry;
     }
