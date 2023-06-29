@@ -29,7 +29,7 @@ import ua.mibal.eatingService.model.Entry;
  * @link t.me/mibal_ua
  */
 @RestController
-@RequestMapping("/eating")
+@RequestMapping("/api/eatings")
 public class EatingController {
 
     private final EatingDao eatingDao;
