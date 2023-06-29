@@ -34,8 +34,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Unique {
 
-    String message() default "${validatedValue} already exists. " +
-                             "${personByBraceletId} already eaten.";
+    String message() default "Person already eaten." +
+                             " | ${validatedValue} ${personByBraceletId}";
 
     Class<?>[] groups() default {};
 

@@ -35,8 +35,8 @@ import java.lang.annotation.Target;
 public @interface PersonRegisteredForDay {
 
     String message() default "Person with bracelet_id=${validatedValue.braceletId} " +
-                             "did not register for day=${validatedValue.dayId}. " +
-                             "${personByBraceletId}";
+                             "did not register for day=${validatedValue.dayId}." +
+                             " | ${validatedValue} ${personByBraceletId}";
 
     Class<?>[] groups() default {};
 
